@@ -1,0 +1,23 @@
+@echo off
+echo Running cleanup script...
+
+:: Check for administrative privileges
+openfiles >nul 2>&1
+if %errorlevel% neq 0 (
+    echo This script requires administrative privileges. Please run as administrator.
+    pause
+    exit /b
+)
+
+:: Clean Windows Temp folder
+echo Cleaning C:\Windows\Temp...
+del /f /s /q %SystemRoot%\Temp\* 2>nul
+for /d %%D in (%SystemRoot%\Temp\*) do rd /s /q "%%D" 2>nul
+
+:: Clean User Temp folder
+echo Cleaning user Temp folder...
+del /f /s /q %TEMP%\* 2>nul
+for /d %%D in (%TEMP%\*) do rd /s /q "%%D" 2>nul
+
+echo Cleanup completed.
+pause
